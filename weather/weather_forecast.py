@@ -44,44 +44,41 @@ def getCityName(cityUrl):
 def getCityWeather(cityUrl):
     html = urlopen(cityUrl)
     bsObj = BeautifulSoup(html.read(), "html.parser")
-    ul = bsObj.find("ul", {"class":"t clearfix"}) #找到天气信息
+    ul = bsObj.find("ul", {"class": "t clearfix"})  # 找到天气信息
     h1s = ul.findAll("h1")
-    dates = []
+    dates = []  # 日期
     for h1 in h1s:
         dates.append(str(h1.text))
     ps = ul.findAll("p", {"class": "wea"})
-    weas = []
+    weas = []  # 天气
     for p in ps:
         weas.append(str(p.text))
-    spans = ul.findAll("span")
-    maxs = []
-    for span in spans:
-        if str(span.text) != "":
-            maxs.append(str(span.text))
-        else:
-            maxs.append(str(span['title']))
-    iis = ul.findAll("i")
-    mins = []
-    for i in iis:
-        mins.append(str(i.text))
+    ems = ul.findAll("em")
+    maxs = []  # 风向
+    for em in ems:
+        spans = em.findAll("span")
+        max = ""
+        for span in spans:
+            max = max + " " + str(span['title'])
+        maxs.append(max)
+    winps = ul.findAll("p", {"class": "win"})
+    mins = []  # 风级
+    for winp in winps:
+        mins.append(str(winp.i.text))
+    temps = ul.findAll("p", {"class": "tem"})
+    wds = []  # 温度
+    for temp in temps:
+        wds.append(str(temp.text).replace("\n", ""))
     weaDatas = []
     i = 0
-    j = 0
-    k = 0
     for date in dates:
         data = "================\n"
         data = data + date + " -> "
         data = data + weas[i] + " => "
-        data = data + maxs[j] + "/" + mins[k] + " => "
-        j = j + 1
-        data = data + maxs[j]+"->"
-        j = j + 1
-        data = data + maxs[j] + " => "
-        k = k + 1
-        data = data + mins[k] + "\n"
+        data = data + wds[i] + " => "
+        data = data + maxs[i] + "->"
+        data = data + mins[i] + "\n"
         i = i + 1
-        j = j + 1
-        k = k + 1
         weaDatas.append(data)
     return weaDatas
 
