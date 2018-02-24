@@ -87,10 +87,10 @@ if len(sys.argv) > 1:
     city = sys.argv[1]
 else:
     city = input("请输入城市：")
-if not getCityUrl(city):
-    print("城市名有误")
-    exit()
 cityUrl = getCityUrl(city)
+if not cityUrl:
+    print("error")
+    exit()
 cityName = getCityName(cityUrl)
 citydatas = getCityWeather(cityUrl)
 weather = cityName+"\n"

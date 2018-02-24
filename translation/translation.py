@@ -29,5 +29,5 @@ url = "http://apis.dict.cn/apis/suggestion.php?"+datas
 html = session.get(url, headers=header)
 rstStr = str(html.text)[6:-2]
 jsonObj = json.loads(rstStr)
-text = str(jsonObj['s'][0]['e']).replace(";&nbsp;", "\n").replace("; ", "\n").replace(";", "\n").replace(" ", "")
+text = str(jsonObj['s'][0]['e']).replace(";&nbsp;", "\n").replace("; ", "\n").replace(";", "\n")
 print(text)
