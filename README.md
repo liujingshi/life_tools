@@ -6,6 +6,8 @@ pip install requests
 
 pip install beautifulsoup4
 
+查歌词
+
 天气预报
 
 英汉互译
